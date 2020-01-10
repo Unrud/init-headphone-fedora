@@ -11,5 +11,6 @@ download the package for your distribution and install it.
 ## Build package
 To build the package run:
 
+    mkdir -p ~/rpmbuild/SOURCES
     spectool -g -R init-headphone.spec
     rpmbuild -bb init-headphone.spec
