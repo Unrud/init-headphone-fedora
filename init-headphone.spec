@@ -1,13 +1,13 @@
 Name:               init-headphone
-Version:            0.13
+Version:            0.14
 Release:            1%{?dist}
 Summary:            Manage the headphone amplifier found in some Clevo laptops
 License:            GPLv3+
 URL:                https://github.com/Unrud/%{name}
 Source0:            https://github.com/Unrud/%{name}/archive/v%{version}.tar.gz
 %{?systemd_requires}
-BuildRequires:      python3, systemd
-Requires:           python3
+BuildRequires:      python3, systemd, kmod
+Requires:           python3, kmod
 BuildArch:          noarch
 
 %description
