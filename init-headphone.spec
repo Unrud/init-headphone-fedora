@@ -6,7 +6,7 @@ License:            GPLv3+
 URL:                https://github.com/Unrud/%{name}
 Source0:            https://github.com/Unrud/%{name}/archive/v%{version}.tar.gz
 %{?systemd_requires}
-BuildRequires:      python3, systemd, kmod
+BuildRequires:      python3-devel, systemd, kmod
 Requires:           python3, kmod
 BuildArch:          noarch
 
@@ -24,6 +24,7 @@ device if headphones are not working after suspend.
 
 %install
 %make_install
+%py3_shebang_fix %{buildroot}%{_sbindir}/%{name}
 
 %files
 %license COPYING
