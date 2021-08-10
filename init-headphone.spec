@@ -16,6 +16,9 @@ device if headphones are not working after suspend.
 
 %prep
 %autosetup -n %{name}-%{version}
+cat << EOF > 80-%{name}.preset
+enable init-headphone.service
+EOF
 
 %build
 ./autogen.sh
@@ -25,24 +28,21 @@ device if headphones are not working after suspend.
 %install
 %make_install
 %py3_shebang_fix %{buildroot}%{_sbindir}/%{name}
+install -D -t %{buildroot}/usr/lib/systemd/system-preset 80-%{name}.preset
+
 
 %files
 %license COPYING
 %doc README.md NEWS.md
 %{_sbindir}/%{name}
 %{_unitdir}/%{name}.service
+/usr/lib/systemd/system-preset/80-%{name}.preset
 
 %post
 %systemd_post %{name}.service
-if [ "$1" = 1 ] ; then
-  /bin/systemctl --no-reload enable %{name}.service >/dev/null 2>&1 || :
-fi
-if /bin/systemctl is-enabled %{name}.service >/dev/null 2>&1 ; then
-  /bin/systemctl start %{name}.service >/dev/null 2>&1 || :
-fi
 
 %preun
 %systemd_preun %{name}.service
 
 %postun
-%systemd_postun %{name}.service
+%systemd_postun_with_restart %{name}.service
